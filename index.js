@@ -26,23 +26,20 @@ var drag = function(element) {
       win.setResizable(false)
     }
 	};
-  // var onmouseup =  function(e) {
-	// 	win.setResizable(true)
-	// };
 
 	element.on('mousedown', onmousedown);
   // element.on('mouseup', onmouseup);
 
 	mouse.on('left-drag', function(x, y) {
 		if(!offset) return;
-
-		var screenScale = remote.screen.getDisplayNearestPoint({ x, y }).scaleFactor;
-		x = Math.round(x / screenScale - offset[0]);
-		y = Math.round(y / screenScale - offset[1]);
+    const pos = remote.screen.getCursorScreenPoint()
+		x = Math.round(pos.x - offset[0]);
+		y = Math.round(pos.y - offset[1]);
 		win.setBounds({
 			width: size[0],
 			height: size[1],
-			x, y
+      x,
+      y
 		});
 	});
 
